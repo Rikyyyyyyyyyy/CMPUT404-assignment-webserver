@@ -35,16 +35,16 @@ class MyWebServer(socketserver.BaseRequestHandler):
 
         # tranfer the data to python readable 
         data_in_string = self.data.decode('utf-8')
-        print("data in string: ", data_in_string)
+        #print("data in string: ", data_in_string)
 
         request_command = data_in_string.split('\r\n')[0]
-        print("request command: ", request_command)
+        #print("request command: ", request_command)
 
         command = request_command.split(' ')[0]
-        print("command: ", command,"++")
+        #print("command: ", command,"++")
 
         Request_URI = request_command.split(' ')[1]
-        print("Request URI: ",Request_URI)
+        #print("Request URI: ",Request_URI)
 
         path = " "
 
@@ -58,13 +58,13 @@ class MyWebServer(socketserver.BaseRequestHandler):
                         Request_URI = Request_URI + "index.html"
                     else:
                         ## return erro 301 
-                        print("301")
-                        print(f"HTTP/1.1 301 Moved Permanently\r\nLocation:{Request_URI +'/'}\r\n\r\n301 Moved Permanently",'utf-8')
+                        #print("301")
+                        #print(f"HTTP/1.1 301 Moved Permanently\r\nLocation:{Request_URI +'/'}\r\n\r\n301 Moved Permanently",'utf-8')
                         self.request.sendall(bytearray("HTTP/1.1 301 Moved Permanently\r\nLocation:" + Request_URI +'/' +"\r\n\r\n301 Moved Permanently",'utf-8'))
                         return
             path = "./www" + Request_URI
         else:
-            print("405")
+            #print("405")
             self.request.sendall(bytearray("HTTP/1.1 405 Method Not Allowed\r\n\r\n405 Method Not Allowed",'utf-8'))
             return
 
@@ -75,15 +75,15 @@ class MyWebServer(socketserver.BaseRequestHandler):
 
 
     def Test_web_server(self,path,type):
-        print("path: ",path)
+        #print("path: ",path)
         if os.path.exists(path):
            file = open(path,'r')
            data = file.read()
-           print("200",type)
+           #print("200",type)
            self.request.sendall(bytearray('HTTP/1.1 200 OK\r\n'+"Content-Type:" +type +"\r\n"  +"\r\n\r\n"+data,'utf-8'))
            return
         else:
-            print("404")
+            #print("404")
             self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n\r\n404 Not Found",'utf-8'))
             return
 
