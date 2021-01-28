@@ -84,7 +84,7 @@ class MyWebServer(socketserver.BaseRequestHandler):
            return
         else:
             print("404")
-            self.request.s"HTTP/1.1 404 Not Found\r\n\r\n404 Not Found",'utf-8'))
+            self.request.sendall(bytearray("HTTP/1.1 404 Not Found\r\n\r\n404 Not Found",'utf-8'))
             return
 
 
